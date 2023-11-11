@@ -29,4 +29,4 @@ jobs:
                   ./get-docker.sh
             - name: 'Spin up containerd'
               run: |
-                  sudo containerd &
+                  containerd &
