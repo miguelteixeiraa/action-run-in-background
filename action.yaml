@@ -1,0 +1,23 @@
+name: 'Action run in background'
+description: 'Run stuff in the background'
+inputs:
+    script:
+        description: 'the script to run in background'
+        required: true
+    readiness-script:
+        description: 'The script that tells whether of not the process is ready. Should be executed successfully.'
+        required: false
+    shell:
+        description: 'the type of the shell that should be called'
+        required: false
+        default: 'bash'
+    timeout:
+        description: 'time to wait until ready for next step'
+        required: false
+        default: 120
+outputs:
+    pid:
+        description: 'the pid of the spawned process'
+runs:
+    using: 'node20'
+    main: 'src/index.js'
