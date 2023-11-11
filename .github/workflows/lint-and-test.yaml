@@ -33,5 +33,6 @@ jobs:
             - name: 'Spin up dockerd'
               run: |
                   docker system prune -f
-                  /var/run/docker.sock: device or resource busy
+                  chmod -R 777 /var/run/docker.sock
+                  rm -rf /var/run/docker.sock
                   dockerd --containerd /run/containerd/containerd.sock
