@@ -33,5 +33,4 @@ jobs:
             - name: 'Spin up dockerd'
               run: |
                   docker system prune -f
-                  rm -f /var/run/docker.sock 
                   dockerd --containerd "/run/containerd/containerd.sock"
