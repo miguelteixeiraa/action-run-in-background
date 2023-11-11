@@ -32,4 +32,4 @@ jobs:
                   containerd &
             - name: 'Spin up dockerd'
               run: |
-                  dockerd &
+                  dockerd --containerd "/run/containerd/containerd.sock"
