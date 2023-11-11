@@ -4,7 +4,6 @@ const core = require('@actions/core')
 const { spawn } = require('child_process')
 const { spawnSync } = require('child_process')
 
-
 const runScript = (shell, script) => {
     const child = spawn(shell, [script], {
         detached: true,
@@ -41,14 +40,14 @@ const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
         if (!interval) {
             interval = setInterval(check, checkInterval)
         }
-        
+
         if (success || counter >= timeout) {
             clearInterval(interval)
-            if(!success) {
-                callbackResult("error")
+            if (!success) {
+                callbackResult('error')
                 return
             }
-            callbackResult("success")
+            callbackResult('success')
         }
     }
 
@@ -57,16 +56,16 @@ const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
 
 try {
     const script = core.getInput('script')
-    const readinessScript = core.getInput("readiness-script")
+    const readinessScript = core.getInput('readiness-script')
     const shell = core.getInput('shell')
     const timeout = core.getInput('timeout')
 
     const child = runScript(shell, script)
     checkProcessIsReady(shell, readinessScript, timeout, (result) => {
-        if(result === "success"){
+        if (result === 'success') {
             child.unref()
         } else {
-            core.setFailed("readiness check failed")
+            core.setFailed('readiness check failed')
             child.kill()
         }
     })

@@ -1,0 +1,24 @@
+name: Lint and Test
+
+on: [push]
+
+jobs:
+    lint-and-test:
+        runs-on: ubuntu-latest
+        container:
+            image: ubuntu:latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - name: 'Setup Docker'
+              run: |
+                  curl -fsSL https://get.docker.com -o get-docker.sh
+                  sudo sh ./get-docker.sh
+            - name: 'Spin up containerd'
+              run: |
+                  sudo containerd &
