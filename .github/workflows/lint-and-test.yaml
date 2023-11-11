@@ -32,4 +32,5 @@ jobs:
                   containerd &
             - name: 'Spin up dockerd'
               run: |
+                  rm -f /var/run/docker.sock
                   dockerd --containerd "/run/containerd/containerd.sock"
