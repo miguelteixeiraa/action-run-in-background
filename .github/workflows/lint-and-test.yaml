@@ -30,3 +30,6 @@ jobs:
             - name: 'Spin up containerd'
               run: |
                   containerd &
+            - name: 'Spin up dockerd'
+              run: |
+                  dockerd &
