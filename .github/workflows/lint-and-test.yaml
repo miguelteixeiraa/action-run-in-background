@@ -4,6 +4,10 @@ on:
     push:
         branches: '*'
 
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     lint-and-format:
         runs-on: ubuntu-latest
