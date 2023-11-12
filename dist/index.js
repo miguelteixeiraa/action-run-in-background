@@ -30196,7 +30196,7 @@ ${pendingInterceptorsFormatter.format(pending)}
 
         const runScript = (shell, script) => {
             try {
-                const child = spawn(shell, ['-c', `"${script}"`], {
+                const child = spawn(shell, ['-c', `'${script}'`], {
                     detached: true,
                 })
 
