@@ -78,7 +78,7 @@ try {
         if (result !== 'success') {
             core.setFailed('readiness check failed')
             child.kill()
-        } 
+        }
     })
 } catch (error) {
     core.setFailed(error.message)
