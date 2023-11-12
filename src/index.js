@@ -10,7 +10,7 @@ const runScript = (shell, script) => {
             detached: true,
         })
         child.unref()
-        
+
         child.stdout.on('data', (data) => {
             core.info(data.toString())
         })
