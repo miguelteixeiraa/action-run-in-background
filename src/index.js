@@ -10,6 +10,13 @@ const runScript = (shell, script) => {
             detached: true,
         })
 
+        child.stdout.on('data', (data) => {
+            core.info(data.toString())
+        })
+        child.stderr.on('data', (data) => {
+            core.info(data.toString())
+        })
+
         return child
     } catch (error) {
         throw new Error(
@@ -72,7 +79,6 @@ try {
             child.kill()
         } else {
             child.unref()
-            child.disconnect()
         }
     })
 } catch (error) {
