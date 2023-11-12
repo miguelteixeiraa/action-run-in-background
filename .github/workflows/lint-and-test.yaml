@@ -42,8 +42,8 @@ jobs:
 
             - name: 'Clean docker daemon'
               run: |
-                  sudo pkill -f "dockerd"
-                  sleep 2
+                  # sudo pkill -f "dockerd"
+                  # sleep 2
                   sudo rm -f /var/run/docker.pid
                   docker system prune --volumes -f
                   sudo rm -f /var/lib/docker/volumes/metadata.db
