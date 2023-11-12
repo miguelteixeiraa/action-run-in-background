@@ -54,6 +54,9 @@ jobs:
                   script: |
                       sudo dockerd --containerd /run/containerd/containerd.sock
                   readiness-script: |
-                      asdasdasdasdas
+                      if ! docker info > /dev/null 2>&1; then
+                          echo "Error accessing Docker info. The Docker daemon is not ready/healthy yet."
+                          exit 1
+                      fi
                   shell: bash
                   timeout: 30
