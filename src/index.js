@@ -6,7 +6,7 @@ const { spawnSync } = require('child_process')
 
 const runScript = (shell, script) => {
     try {
-        const child = spawn(shell, ['-c', script], {
+        const child = spawn(shell, ['-c', `"${script}"`], {
             detached: true,
         })
 
@@ -14,7 +14,6 @@ const runScript = (shell, script) => {
             core.info(data.toString())
         })
         child.stderr.on('data', (data) => {
-            core.info('debug here 1')
             core.error(data.toString())
         })
 
