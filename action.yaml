@@ -20,4 +20,4 @@ outputs:
         description: 'the pid of the spawned process'
 runs:
     using: 'node20'
-    main: 'src/index.js'
+    main: 'dist/index.js'
