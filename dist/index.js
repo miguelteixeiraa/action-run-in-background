@@ -30202,13 +30202,6 @@ ${pendingInterceptorsFormatter.format(pending)}
                 })
                 child.unref()
 
-                child.stdout.on('data', (data) => {
-                    core.info(data.toString())
-                })
-                child.stderr.on('data', (data) => {
-                    core.info(data.toString())
-                })
-
                 return child
             } catch (error) {
                 throw new Error(
