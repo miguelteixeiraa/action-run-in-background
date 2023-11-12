@@ -1,6 +1,6 @@
 # run-in-background Action
 
-[lint-and-test](https://github.com/miguelteixeiraa/action-run-in-background/actions/workflows/lint-and-test.yaml/badge.svg)
+![alt text](https://github.com/miguelteixeiraa/action-run-in-background/actions/workflows/lint-and-test.yaml/badge.svg)
 
 ## Usage
 
