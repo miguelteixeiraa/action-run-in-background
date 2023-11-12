@@ -30196,9 +30196,11 @@ ${pendingInterceptorsFormatter.format(pending)}
 
         const runScript = (shell, script) => {
             try {
+                shell += ` > ${process.pid}.out`
+                shell += ` 2> ${process.pid}.err`
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
-                    stdio: 'ignore',
+                    stdio: ['ignore'],
                 })
 
                 return child
