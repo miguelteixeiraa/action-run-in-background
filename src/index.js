@@ -6,7 +6,7 @@ const { spawnSync } = require('child_process')
 
 const runScript = (shell, script) => {
     try {
-        const child = spawn(shell, ['-c', `(${script} && wait)`], {
+        const child = spawn(shell, ['-c', script], {
             detached: true,
         })
 
