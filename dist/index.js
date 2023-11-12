@@ -30204,7 +30204,7 @@ ${pendingInterceptorsFormatter.format(pending)}
                     core.info(data.toString())
                 })
                 child.stderr.on('data', (data) => {
-                    core.error(data.toString())
+                    core.info(data.toString())
                 })
 
                 return child
