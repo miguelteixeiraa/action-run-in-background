@@ -1,5 +1,7 @@
 name: 'Action run in background'
 description: 'Run stuff in the background'
+icon: arrow-up
+color: purple
 inputs:
   script:
     description: 'The script to run in background.'
