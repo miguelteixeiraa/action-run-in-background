@@ -55,6 +55,17 @@ jobs:
             - uses: miguelteixeiraa/action-run-in-background@main
               with:
                   script: |
+                      "sudo containerd"
+                  readiness-script: |
+                      if ! ctr version > /dev/null 2>&1; then
+                          echo "Error accessing containerd. Containerd is ready/health yet."
+                          exit 1
+                      fi
+                  shell: bash
+                  timeout: 30
+            - uses: miguelteixeiraa/action-run-in-background@main
+              with:
+                  script: |
                       "sudo dockerd --containerd /run/containerd/containerd.sock"
                   readiness-script: |
                       if ! docker info > /dev/null 2>&1; then
