@@ -4,7 +4,7 @@
 
 ### Inputs
 
-````yaml
+```yaml
 - uses: miguelteixeiraa/action-run-in-background@v1
   with:
     # Description: The script to run in background
@@ -28,7 +28,7 @@
     # required: false
     # Default: 120
     timeout: 120
-
+```
 
 ### Usage
 
@@ -60,7 +60,7 @@ jobs:
 
           shell: bash
           timeout: 30
-````
+```
 
 ### How it works
 
