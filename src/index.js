@@ -5,18 +5,24 @@ const { spawn } = require('child_process')
 const { spawnSync } = require('child_process')
 
 const runScript = (shell, script) => {
-    const child = spawn(shell, [script], {
-        detached: true,
-    })
+    try {
+        const child = spawn(shell, [script], {
+            detached: true,
+        })
 
-    child.stdout.on('data', (data) => {
-        core.info(data.toString())
-    })
-    child.stderr.on('data', (data) => {
-        core.error(data.toString())
-    })
+        child.stdout.on('data', (data) => {
+            core.info(data.toString())
+        })
+        child.stderr.on('data', (data) => {
+            core.error(data.toString())
+        })
 
-    return child
+        return child
+    } catch (error) {
+        throw new Error(
+            `An error ocurred while trying to run the script ${error}`
+        )
+    }
 }
 
 const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
@@ -51,7 +57,13 @@ const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
         }
     }
 
-    check()
+    try {
+        check()
+    } catch (error) {
+        throw new Error(
+            `An error ocurred while checking for script readiness ${error}`
+        )
+    }
 }
 
 try {

@@ -30195,18 +30195,24 @@ ${pendingInterceptorsFormatter.format(pending)}
         const { spawnSync } = __nccwpck_require__(2081)
 
         const runScript = (shell, script) => {
-            const child = spawn(shell, [script], {
-                detached: true,
-            })
+            try {
+                const child = spawn(shell, [script], {
+                    detached: true,
+                })
 
-            child.stdout.on('data', (data) => {
-                core.info(data.toString())
-            })
-            child.stderr.on('data', (data) => {
-                core.error(data.toString())
-            })
+                child.stdout.on('data', (data) => {
+                    core.info(data.toString())
+                })
+                child.stderr.on('data', (data) => {
+                    core.error(data.toString())
+                })
 
-            return child
+                return child
+            } catch (error) {
+                throw new Error(
+                    `An error ocurred while trying to run the script ${error}`
+                )
+            }
         }
 
         const checkProcessIsReady = (
@@ -30246,7 +30252,13 @@ ${pendingInterceptorsFormatter.format(pending)}
                 }
             }
 
-            check()
+            try {
+                check()
+            } catch (error) {
+                throw new Error(
+                    `An error ocurred while checking for script readiness ${error}`
+                )
+            }
         }
 
         try {
