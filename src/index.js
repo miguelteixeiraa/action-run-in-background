@@ -27,7 +27,7 @@ const runScript = (shell, script) => {
 }
 
 const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
-    const checkInterval = 1000
+    const checkInterval = 5000
     let counter = 0
     let success = false
     let interval = null
@@ -75,12 +75,10 @@ try {
 
     const child = runScript(shell, script)
     checkProcessIsReady(shell, readinessScript, timeout, (result) => {
-        if (result === 'success') {
-            child.unref()
-        } else {
+        if (result !== 'success') {
             core.setFailed('readiness check failed')
             child.kill()
-        }
+        } 
     })
 } catch (error) {
     core.setFailed(error.message)
