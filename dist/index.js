@@ -30196,13 +30196,11 @@ ${pendingInterceptorsFormatter.format(pending)}
 
         const runScript = (shell, script) => {
             try {
-                script += ` > ${process.pid}.out`
-                script += ` 2> ${process.pid}.err`
-
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
                     stdio: 'ignore',
                 })
+                // TODO: keep it independent but show logs
 
                 return child
             } catch (error) {

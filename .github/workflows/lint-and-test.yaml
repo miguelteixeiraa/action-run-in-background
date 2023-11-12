@@ -52,3 +52,12 @@ jobs:
                       fi
                   shell: bash
                   timeout: 30
+
+            - name: 'Should keep running along steps'
+              run: |
+                  if curl -sSf http://localhost:8000/hello > /dev/null; then
+                      echo "Curl request was successful."
+                  else
+                      echo "Curl request failed."
+                      exit 1
+                  fi
