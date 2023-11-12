@@ -52,10 +52,8 @@ jobs:
             - uses: miguelteixeiraa/action-run-in-background@main
               with:
                   script: |
-                      sudo dockerd --containerd /run/containerd/containerd.sock
+                      "sudo dockerd --containerd /run/containerd/containerd.sock"
                   readiness-script: |
-                      docker container ps
+                      asdasdasdasdas
                   shell: bash
                   timeout: 30
-            - name: Check daemon after
-              run: docker container ps
