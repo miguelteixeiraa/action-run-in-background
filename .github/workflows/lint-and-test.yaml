@@ -7,8 +7,6 @@ on:
 jobs:
     lint-and-test:
         runs-on: ubuntu-latest
-        container:
-            image: ubuntu:latest
         steps:
             - uses: actions/checkout@v4
             - uses: actions/setup-node@v3
@@ -24,7 +22,6 @@ jobs:
 
             - name: 'Setup Docker'
               run: |
-                  rm -rf /var/run/docker*
                   curl -fsSL https://get.docker.com -o get-docker.sh
                   chmod +x ./get-docker.sh
                   ./get-docker.sh
