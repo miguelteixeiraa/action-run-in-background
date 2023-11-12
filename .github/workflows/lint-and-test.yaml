@@ -30,4 +30,5 @@ jobs:
                   sudo containerd &
             - name: 'Spin up dockerd'
               run: |
+                  sudo rm /var/run/docker.pid
                   sudo dockerd --containerd /run/containerd/containerd.sock
