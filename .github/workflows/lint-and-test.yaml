@@ -21,10 +21,12 @@ jobs:
                   version: 8
             - name: 'Check code formatting'
               run: |
+                  pnpm i
                   pnpm run format-check
 
     test:
         runs-on: ubuntu-latest
+        needs: [lint-and-format]
         steps:
             - uses: actions/checkout@v4
             - name: 'Setup container'
