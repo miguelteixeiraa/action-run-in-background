@@ -33,6 +33,7 @@ jobs:
             - name: 'Spin up dockerd'
               run: |
                   docker system prune -f
-                  chmod -R 777 /var/run/docker.sock
-                  rm -rf /var/run/docker.sock
+                  umount /var/lib/docker/aufs
+                  rm -fr /var/lib/docker
+
                   dockerd --containerd /run/containerd/containerd.sock
