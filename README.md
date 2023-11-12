@@ -1,6 +1,6 @@
 # run-in-background Action
 
-Run stuff in the background
+Action to run stuff in background
 
 ![alt text](https://github.com/miguelteixeiraa/action-run-in-background/actions/workflows/lint-and-test.yaml/badge.svg)
 
