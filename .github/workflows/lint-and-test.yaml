@@ -40,7 +40,7 @@ jobs:
           cd test && pnpm i
 
       - name: 'Spin up server'
-        uses: miguelteixeiraa/action-run-in-background@main
+        uses: miguelteixeiraa/action-run-in-background@v1
         with:
           script: 'cd test && pnpm start'
           readiness-script: |
