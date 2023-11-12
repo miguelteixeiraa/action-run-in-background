@@ -1,58 +1,58 @@
 name: Lint and Test
 
 on:
-    push:
-        branches: '*'
+  push:
+    branches: '*'
 
 concurrency:
-    group: ${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-    lint-and-format:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - uses: pnpm/action-setup@v2
-              with:
-                  version: 8
-            - name: 'Check code formatting'
-              run: |
-                  pnpm i
-                  pnpm run format-check
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: 'Check code formatting'
+        run: |
+          pnpm i
+          pnpm run format-check
 
-    test-run-process-in-background:
-        runs-on: ubuntu-latest
-        needs: [lint-and-format]
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 20
-            - uses: pnpm/action-setup@v2
-              with:
-                  version: 8
-            - name: 'Setup test server'
-              run: |
-                  cd test && pnpm i
+  test-run-process-in-background:
+    runs-on: ubuntu-latest
+    needs: [lint-and-format]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: 'Setup test server'
+        run: |
+          cd test && pnpm i
 
-            - name: 'Spin up server'
-              uses: miguelteixeiraa/action-run-in-background@main
-              with:
-                  script: 'cd test && pnpm start'
-                  readiness-script: |
-                      if curl -sSf http://localhost:8000/hello > /dev/null; then
-                          echo "Curl request was successful."
-                      else
-                          echo "Curl request failed."
-                          exit 1
-                      fi
-                  shell: bash
-                  timeout: 30
+      - name: 'Spin up server'
+        uses: miguelteixeiraa/action-run-in-background@main
+        with:
+          script: 'cd test && pnpm start'
+          readiness-script: |
+            if curl -sSf http://localhost:8000/hello > /dev/null; then
+                echo "Curl request was successful."
+            else
+                echo "Curl request failed."
+                exit 1
+            fi
+          shell: bash
+          timeout: 30
 
-            - name: 'Should keep running along steps'
-              run: |
-                  curl -s http://localhost:8000/hello
+      - name: 'Should keep running along steps'
+        run: |
+          curl -s http://localhost:8000/hello

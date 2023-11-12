@@ -1,14 +1,14 @@
 'use strict'
 
 const fastify = require('fastify')({
-    logger: true,
+  logger: true,
 })
 
 fastify.get('/hello', () => {
-    return 'UP'
+  return 'UP'
 })
 
 fastify.listen({
-    host: '0.0.0.0',
-    port: 8000,
+  host: '0.0.0.0',
+  port: 8000,
 })
