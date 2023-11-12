@@ -30198,9 +30198,7 @@ ${pendingInterceptorsFormatter.format(pending)}
             try {
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
-                    stdio: 'ignore',
                 })
-                child.unref()
 
                 return child
             } catch (error) {
@@ -30267,6 +30265,9 @@ ${pendingInterceptorsFormatter.format(pending)}
                 if (result !== 'success') {
                     core.setFailed('readiness check failed')
                     child.kill()
+                } else {
+                    child.unref()
+                    child.disconnect()
                 }
             })
         } catch (error) {
