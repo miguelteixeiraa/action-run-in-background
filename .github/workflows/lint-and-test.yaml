@@ -24,7 +24,7 @@ jobs:
                   pnpm i
                   pnpm run format-check
 
-    test:
+    test-run-docker-daemon-in-background:
         runs-on: ubuntu-latest
         needs: [lint-and-format]
         steps:
@@ -54,7 +54,7 @@ jobs:
             - uses: miguelteixeiraa/action-run-in-background@main
               with:
                   script: |
-                      sudo dockerd --containerd /run/containerd/containerd.sock
+                      "sudo dockerd --containerd /run/containerd/containerd.sock"
                   readiness-script: |
                       if ! docker info > /dev/null 2>&1; then
                           echo "Error accessing Docker info. The Docker daemon is not ready/healthy yet."
