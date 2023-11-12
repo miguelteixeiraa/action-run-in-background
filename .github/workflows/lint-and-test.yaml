@@ -51,7 +51,7 @@ jobs:
             - name: 'Spin up containerd'
               run: |
                   sudo containerd &
-                  wait
+                  sleep 10
             - uses: miguelteixeiraa/action-run-in-background@main
               with:
                   script: |
