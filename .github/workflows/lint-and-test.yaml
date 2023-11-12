@@ -43,15 +43,28 @@ jobs:
             - name: 'Clean docker daemon'
               run: |
                   sudo pkill -f "dockerd"
+                  sudo pkill -f "containerd"
                   sleep 2
                   sudo rm -f /var/run/docker.pid
                   docker system prune --volumes -f
                   sudo rm -f /var/lib/docker/volumes/metadata.db
 
+            - name: 'Spin up Containerd'
+              uses: miguelteixeiraa/action-run-in-background@main
+              with:
+                  script: 'sudo containerd'
+                  readiness-script: |
+                      if ! ctr version > /dev/null 2>&1; then
+                          echo "Error accessing containerd. Containerd is not ready/health yet."
+                          exit 1
+                      fi
+                  shell: bash
+                  timeout: 60
+
             - name: 'Spin up Dockerd'
               uses: miguelteixeiraa/action-run-in-background@main
               with:
-                  script: 'sudo dockerd'
+                  script: 'sudo dockerd --containerd /run/containerd/containerd.sock'
                   readiness-script: |
                       if ! docker info > /dev/null 2>&1; then
                           echo "Error accessing Docker info. The Docker daemon is not ready/healthy yet."
