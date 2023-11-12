@@ -54,7 +54,7 @@ jobs:
                   script: 'sudo containerd'
                   readiness-script: |
                       if ! ctr version > /dev/null 2>&1; then
-                          echo "Error accessing containerd. Containerd is ready/health yet."
+                          echo "Error accessing containerd. Containerd is not ready/health yet."
                           exit 1
                       fi
                   shell: bash

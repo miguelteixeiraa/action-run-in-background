@@ -30231,7 +30231,7 @@ ${pendingInterceptorsFormatter.format(pending)}
                 core.info(`run check if process is ready number ${counter}`)
 
                 const result = spawnSync(shell, ['-c', script])
-                if (result.error) {
+                if (result.status) {
                     core.error(result.error)
                 } else {
                     core.info(result.stdout)
