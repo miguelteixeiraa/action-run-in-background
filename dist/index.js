@@ -30201,7 +30201,7 @@ ${pendingInterceptorsFormatter.format(pending)}
 
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
-                    stdio: ['ignore'],
+                    stdio: 'ignore',
                 })
 
                 return child
