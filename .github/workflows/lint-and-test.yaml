@@ -52,7 +52,7 @@ jobs:
             - uses: miguelteixeiraa/action-run-in-background@main
               with:
                   script: |
-                      "sudo dockerd --containerd /run/containerd/containerd.sock"
+                      "dockerd --containerd /run/containerd/containerd.sock"
                   readiness-script: |
                       asdasdasdasdas
                   shell: bash
