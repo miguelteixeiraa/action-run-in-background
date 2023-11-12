@@ -30196,7 +30196,7 @@ ${pendingInterceptorsFormatter.format(pending)}
 
         const runScript = (shell, script) => {
             try {
-                const child = spawn(shell, [script], {
+                const child = spawn(shell, script.split(' '), {
                     detached: true,
                 })
 
@@ -30204,6 +30204,7 @@ ${pendingInterceptorsFormatter.format(pending)}
                     core.info(data.toString())
                 })
                 child.stderr.on('data', (data) => {
+                    core.info('debug here 1')
                     core.error(data.toString())
                 })
 
