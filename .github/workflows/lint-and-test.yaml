@@ -24,6 +24,7 @@ jobs:
 
             - name: 'Setup Docker'
               run: |
+                  rm -rf /var/run/docker*
                   curl -fsSL https://get.docker.com -o get-docker.sh
                   chmod +x ./get-docker.sh
                   ./get-docker.sh
@@ -32,8 +33,4 @@ jobs:
                   containerd &
             - name: 'Spin up dockerd'
               run: |
-                  docker system prune -f
-                  umount /var/lib/docker/aufs
-                  rm -fr /var/lib/docker
-
                   dockerd --containerd /run/containerd/containerd.sock
