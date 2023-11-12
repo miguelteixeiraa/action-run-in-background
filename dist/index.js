@@ -25059,12 +25059,10 @@
 
                     return Array.from(mockAgentClients.entries())
                         .flatMap(([origin, scope]) =>
-                            scope
-                                .deref()
-                                [kDispatches].map((dispatch) => ({
-                                    ...dispatch,
-                                    origin,
-                                }))
+                            scope.deref()[kDispatches].map((dispatch) => ({
+                                ...dispatch,
+                                origin,
+                            }))
                         )
                         .filter(({ pending }) => pending)
                 }
