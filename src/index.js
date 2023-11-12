@@ -8,7 +8,7 @@ const runScript = (shell, script) => {
     try {
         const child = spawn(shell, ['-c', script], {
             detached: true,
-        })
+        }).unref()
 
         child.stdout.on('data', (data) => {
             core.info(data.toString())
