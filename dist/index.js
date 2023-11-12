@@ -30193,17 +30193,12 @@ ${pendingInterceptorsFormatter.format(pending)}
 
         const { spawn } = __nccwpck_require__(2081)
         const { spawnSync } = __nccwpck_require__(2081)
-        const fs = __nccwpck_require__(7147)
 
-        const runScript = (shell) => {
+        const runScript = (shell, script) => {
             try {
-                const child = spawn(
-                    shell,
-                    ['action-run-in-background-script'],
-                    {
-                        detached: true,
-                    }
-                )
+                const child = spawn(shell, ['-c', script], {
+                    detached: true,
+                })
 
                 child.stdout.on('data', (data) => {
                     core.info(data.toString())
@@ -30221,7 +30216,12 @@ ${pendingInterceptorsFormatter.format(pending)}
             }
         }
 
-        const checkProcessIsReady = (shell, timeout, callbackResult) => {
+        const checkProcessIsReady = (
+            shell,
+            script,
+            timeout,
+            callbackResult
+        ) => {
             const checkInterval = 1000
             let counter = 0
             let success = false
@@ -30230,9 +30230,7 @@ ${pendingInterceptorsFormatter.format(pending)}
             function check() {
                 core.info(`run check if process is ready number ${counter}`)
 
-                const result = spawnSync(shell, [
-                    'action-run-in-background-readiness-script',
-                ])
+                const result = spawnSync(shell, ['-c', script])
                 if (result.error) {
                     core.error(result.error)
                 } else {
@@ -30269,12 +30267,6 @@ ${pendingInterceptorsFormatter.format(pending)}
             const readinessScript = core.getInput('readiness-script')
             const shell = core.getInput('shell')
             const timeout = core.getInput('timeout')
-
-            fs.writeFileSync('action-run-in-background-script', script)
-            fs.writeFileSync(
-                'action-run-in-background-readiness-script',
-                readinessScript
-            )
 
             const child = runScript(shell, script)
             checkProcessIsReady(shell, readinessScript, timeout, (result) => {
