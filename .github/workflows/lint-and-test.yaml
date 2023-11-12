@@ -29,45 +29,25 @@ jobs:
         needs: [lint-and-format]
         steps:
             - uses: actions/checkout@v4
-            - name: 'Setup container'
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - name: 'Setup test server'
               run: |
-                  sudo apt update
-                  sudo apt install ca-certificates curl gnupg -y
+                  cd test && pnpm i
 
-            - name: 'Setup Docker'
-              run: |
-                  curl -fsSL https://get.docker.com -o get-docker.sh
-                  sudo chmod +x ./get-docker.sh
-                  sudo ./get-docker.sh
-
-            - name: 'Clean docker daemon'
-              run: |
-                  sudo pkill -f "dockerd"
-                  sudo pkill -f "containerd"
-                  sleep 2
-                  sudo rm -f /var/run/docker.pid
-                  docker system prune --volumes -f
-                  sudo rm -f /var/lib/docker/volumes/metadata.db
-
-            - name: 'Spin up Containerd'
+            - name: 'Spin up server'
               uses: miguelteixeiraa/action-run-in-background@main
               with:
-                  script: 'sudo containerd'
+                  script: 'cd test && pnpm start'
                   readiness-script: |
-                      if ! ctr version > /dev/null 2>&1; then
-                          echo "Error accessing containerd. Containerd is not ready/health yet."
-                          exit 1
-                      fi
-                  shell: bash
-                  timeout: 60
-
-            - name: 'Spin up Dockerd'
-              uses: miguelteixeiraa/action-run-in-background@main
-              with:
-                  script: 'sudo dockerd --containerd /run/containerd/containerd.sock'
-                  readiness-script: |
-                      if ! docker info > /dev/null 2>&1; then
-                          echo "Error accessing Docker info. The Docker daemon is not ready/healthy yet."
+                      if curl -sSf http://localhost:8000/hello > /dev/null; then
+                          echo "Curl request was successful."
+                      else
+                          echo "Curl request failed."
                           exit 1
                       fi
                   shell: bash
