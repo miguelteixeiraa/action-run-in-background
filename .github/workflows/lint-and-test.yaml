@@ -5,7 +5,7 @@ on:
         branches: '*'
 
 jobs:
-    lint-and-test:
+    lint-and-format:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -15,6 +15,14 @@ jobs:
             - uses: pnpm/action-setup@v2
               with:
                   version: 8
+            - name: 'Check code formatting'
+              run: |
+                  pnpm run format-check
+
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
             - name: 'Setup container'
               run: |
                   sudo apt update
@@ -25,13 +33,16 @@ jobs:
                   curl -fsSL https://get.docker.com -o get-docker.sh
                   sudo chmod +x ./get-docker.sh
                   sudo ./get-docker.sh
+
+            - name: 'Clean docker daemon'
+              run: |
+                  sudo rm /var/run/docker.pid
+                  docker system prune --volumes -f
+                  sudo rm -f /var/lib/docker/volumes/metadata.db
+
             - name: 'Spin up containerd'
               run: |
                   sudo containerd &
             - name: 'Spin up dockerd'
               run: |
-                  sudo rm /var/run/docker.pid
-                  docker system prune --volumes -f
-                  sudo rm -f /var/lib/docker/volumes/metadata.db 
-
                   sudo dockerd --containerd /run/containerd/containerd.sock
