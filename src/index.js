@@ -3,10 +3,11 @@ const core = require('@actions/core')
 
 const { spawn } = require('child_process')
 const { spawnSync } = require('child_process')
+const fs = require('fs')
 
-const runScript = (shell, script) => {
+const runScript = (shell) => {
     try {
-        const child = spawn(shell, script.split(' '), {
+        const child = spawn(shell, ['action-run-in-background-script'], {
             detached: true,
         })
 
@@ -26,7 +27,7 @@ const runScript = (shell, script) => {
     }
 }
 
-const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
+const checkProcessIsReady = (shell, timeout, callbackResult) => {
     const checkInterval = 1000
     let counter = 0
     let success = false
@@ -35,7 +36,9 @@ const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
     function check() {
         core.info(`run check if process is ready number ${counter}`)
 
-        const result = spawnSync(shell, [script])
+        const result = spawnSync(shell, [
+            'action-run-in-background-readiness-script',
+        ])
         if (result.error) {
             core.error(result.error)
         } else {
@@ -72,6 +75,12 @@ try {
     const readinessScript = core.getInput('readiness-script')
     const shell = core.getInput('shell')
     const timeout = core.getInput('timeout')
+
+    fs.writeFileSync('action-run-in-background-script', script)
+    fs.writeFileSync(
+        'action-run-in-background-readiness-script',
+        readinessScript
+    )
 
     const child = runScript(shell, script)
     checkProcessIsReady(shell, readinessScript, timeout, (result) => {
