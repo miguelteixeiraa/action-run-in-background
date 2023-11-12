@@ -58,7 +58,7 @@ jobs:
                           exit 1
                       fi
                   shell: bash
-                  timeout: 30
+                  timeout: 60
 
             - name: 'Spin up Dockerd'
               uses: miguelteixeiraa/action-run-in-background@main
