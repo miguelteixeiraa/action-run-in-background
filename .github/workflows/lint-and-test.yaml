@@ -17,17 +17,17 @@ jobs:
                   version: 8
             - name: 'Setup container'
               run: |
-                  apt update
-                  apt install ca-certificates curl gnupg -y
+                  sudo apt update
+                  sudo apt install ca-certificates curl gnupg -y
 
             - name: 'Setup Docker'
               run: |
                   curl -fsSL https://get.docker.com -o get-docker.sh
-                  chmod +x ./get-docker.sh
-                  ./get-docker.sh
+                  sudo chmod +x ./get-docker.sh
+                  sudo ./get-docker.sh
             - name: 'Spin up containerd'
               run: |
-                  containerd &
+                  sudo containerd &
             - name: 'Spin up dockerd'
               run: |
-                  dockerd --containerd /run/containerd/containerd.sock
+                  sudo dockerd --containerd /run/containerd/containerd.sock
