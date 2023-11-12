@@ -6,13 +6,13 @@ inputs:
         required: true
     readiness-script:
         description: 'The script that tells whether of not the process is ready. Should be executed successfully.'
-        required: false
+        required: true
     shell:
         description: 'the type of the shell that should be called'
         required: false
         default: 'bash'
     timeout:
-        description: 'time to wait until ready for next step'
+        description: 'time in seconds to wait until ready for next step'
         required: false
         default: 120
 outputs:

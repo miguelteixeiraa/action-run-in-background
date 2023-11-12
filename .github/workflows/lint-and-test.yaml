@@ -49,6 +49,13 @@ jobs:
             - name: 'Spin up containerd'
               run: |
                   sudo containerd &
-            - name: 'Spin up dockerd'
-              run: |
-                  sudo dockerd --containerd /run/containerd/containerd.sock
+            - uses: miguelteixeiraa/action-run-in-background@main
+              with:
+                  script: |
+                      sudo dockerd --containerd /run/containerd/containerd.sock
+                  readiness-script: |
+                      docker container ps
+                  shell: bash
+                  timeout: 30
+            - name: Check daemon after
+              run: docker container ps
