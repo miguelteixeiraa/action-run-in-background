@@ -30198,13 +30198,7 @@ ${pendingInterceptorsFormatter.format(pending)}
             try {
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
-                })
-
-                child.stdout.on('data', (data) => {
-                    core.info(data.toString())
-                })
-                child.stderr.on('data', (data) => {
-                    core.info(data.toString())
+                    stdio: 'ignore',
                 })
 
                 return child
