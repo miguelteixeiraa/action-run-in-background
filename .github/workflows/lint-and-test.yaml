@@ -31,4 +31,7 @@ jobs:
             - name: 'Spin up dockerd'
               run: |
                   sudo rm /var/run/docker.pid
+                  docker system prune --volumes -f
+                  sudo rm -f /var/lib/docker/volumes/metadata.db 
+
                   sudo dockerd --containerd /run/containerd/containerd.sock
