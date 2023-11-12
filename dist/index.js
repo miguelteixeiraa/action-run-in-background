@@ -30198,6 +30198,7 @@ ${pendingInterceptorsFormatter.format(pending)}
             try {
                 const child = spawn(shell, ['-c', script], {
                     detached: true,
+                    stdio: 'ignore',
                 })
                 child.unref()
 
