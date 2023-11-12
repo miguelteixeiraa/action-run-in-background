@@ -34,7 +34,7 @@ const checkProcessIsReady = (shell, script, timeout, callbackResult) => {
     function check() {
         core.info(`run check if process is ready number ${counter}`)
 
-        const result = spawnSync(shell, ['-c', script])
+        const result = spawnSync(shell, ['-c', `\'${script}\'`])
         if (result.error) {
             core.error(result.error)
         } else {
